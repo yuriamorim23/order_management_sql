@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08-Maio-2022 às 18:50
+-- Tempo de geração: 18-Maio-2022 às 22:28
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.1
 
@@ -59,21 +59,21 @@ CREATE TABLE `order_client` (
   `order_id` int(11) NOT NULL,
   `client_id` int(11) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `price` decimal(9,2) DEFAULT 0.00,
-  `quantity` int(11) DEFAULT NULL
+  `more_info` varchar(50) DEFAULT NULL,
+  `status` char(10) NOT NULL DEFAULT 'OPEN'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `order_client`
 --
 
-INSERT INTO `order_client` (`order_id`, `client_id`, `date`, `price`, `quantity`) VALUES
-(1, 2, '2022-05-08 14:58:13', '15.00', 1),
-(2, 1, '2022-05-08 14:58:13', '45.00', 2),
-(3, 3, '2022-05-08 14:58:13', '600.00', 1),
-(4, 4, '2022-05-08 14:58:13', '10.00', 5),
-(5, 5, '2022-05-08 14:58:13', '30.00', 2),
-(6, 6, '2022-05-08 14:58:13', '250.00', 1);
+INSERT INTO `order_client` (`order_id`, `client_id`, `date`, `more_info`, `status`) VALUES
+(1, 2, '2022-05-18 18:40:41', 'no info', 'OPEN'),
+(2, 1, '2022-05-18 18:40:41', 'no info', 'CLOSE'),
+(3, 3, '2022-05-18 18:40:41', 'no info', 'OPEN'),
+(4, 4, '2022-05-18 18:40:41', 'no info', 'OPEN'),
+(5, 5, '2022-05-18 18:40:41', 'no info', 'CLOSE'),
+(6, 6, '2022-05-18 18:40:41', 'no info', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -85,22 +85,21 @@ CREATE TABLE `order_items` (
   `order_items_id` int(11) NOT NULL,
   `client_order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `value` decimal(9,2) DEFAULT 0.00,
-  `quantity` int(11) DEFAULT NULL,
-  `total` decimal(9,2) DEFAULT 0.00
+  `price` decimal(9,2) DEFAULT 0.00,
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `order_items`
 --
 
-INSERT INTO `order_items` (`order_items_id`, `client_order_id`, `product_id`, `value`, `quantity`, `total`) VALUES
-(1, 1, 1, '15.00', 1, '15.00'),
-(2, 2, 2, '45.00', 2, '90.00'),
-(3, 3, 3, '600.00', 1, '600.00'),
-(4, 4, 4, '10.00', 5, '50.00'),
-(5, 5, 5, '30.00', 2, '60.00'),
-(6, 6, 6, '250.00', 1, '250.00');
+INSERT INTO `order_items` (`order_items_id`, `client_order_id`, `product_id`, `price`, `quantity`) VALUES
+(1, 1, 1, '15.00', 1),
+(2, 2, 2, '45.00', 2),
+(3, 3, 3, '600.00', 1),
+(4, 4, 4, '10.00', 5),
+(5, 5, 5, '30.00', 2),
+(6, 6, 6, '250.00', 1);
 
 -- --------------------------------------------------------
 
@@ -111,20 +110,22 @@ INSERT INTO `order_items` (`order_items_id`, `client_order_id`, `product_id`, `v
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `description` varchar(50) DEFAULT NULL,
-  `price` decimal(9,2) DEFAULT 0.00
+  `price` decimal(9,2) DEFAULT 0.00,
+  `min_price` decimal(9,2) DEFAULT 0.00,
+  `stock_quantity` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `product`
 --
 
-INSERT INTO `product` (`product_id`, `description`, `price`) VALUES
-(1, 'keyboard', '15.00'),
-(2, 'printer', '45.00'),
-(3, 'notbook', '600.00'),
-(4, 'mouse', '10.00'),
-(5, 'headfone', '30.00'),
-(6, 'monitor', '250.00');
+INSERT INTO `product` (`product_id`, `description`, `price`, `min_price`, `stock_quantity`) VALUES
+(1, 'keyboard', '15.00', '10.00', '50'),
+(2, 'printer', '45.00', '40.00', '10'),
+(3, 'notbook', '600.00', '550.00', '10'),
+(4, 'mouse', '10.00', '8.00', '80'),
+(5, 'headfone', '30.00', '25.00', '30'),
+(6, 'monitor', '250.00', '230.00', '15');
 
 --
 -- Índices para tabelas despejadas
